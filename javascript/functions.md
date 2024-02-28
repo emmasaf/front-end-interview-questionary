@@ -14,8 +14,63 @@ function regularFunction(arg1, arg2) {
 
 Особенности:
 - **Контекст выполнения (`this`)**: В обычных функциях значение `this` зависит от того, как вызывается функция. Оно может изменяться в зависимости от контекста вызова.
+```javascript
+function show() {
+  console.log(this.name);
+}
+
+const obj = {
+  name: "Объект obj",
+  show: show
+};
+
+const obj2 = {
+  name: "Объект obj2",
+  show
+};
+
+show(); // undefined или глобальный объект в нестрогом режиме
+obj.show(); // "Объект obj"
+obj2.show(); // "Объект obj2"
+
+const detachedShow = obj.show;
+detachedShow(); // undefined или глобальный объект в нестрогом режиме, так как контекст потерян
+
+```
 - **Аргументы (`arguments`)**: Обычные функции имеют доступ к объекту `arguments`, который содержит все переданные в функцию аргументы.
+```javascript
+function sum() {
+    let total = 0;
+    for(let i = 0; i < arguments.length; i++) {
+        total += arguments[i];
+    }
+    return total;
+}
+
+console.log(sum(1, 2, 3, 4)); // Выведет 10
+
+```
 - **Конструкторы (Constructors)**: Обычные функции могут использоваться как конструкторы для создания новых объектов с помощью оператора `new`.
+```javascript
+function Car(make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+
+  this.displayInfo = function() {
+    console.log(`Автомобиль: ${this.make} ${this.model}, ${this.year} года выпуска.`);
+  };
+}
+
+// Создаем новые объекты с помощью конструктора
+const car1 = new Car("Toyota", "Corolla", 2020);
+const car2 = new Car("Ford", "Mustang", 1969);
+
+// Вызываем метод displayInfo для каждого объекта
+car1.displayInfo(); // Автомобиль: Toyota Corolla, 2020 года выпуска.
+car2.displayInfo(); // Автомобиль: Ford Mustang, 1969 года выпуска.
+
+```
 
 #### Стрелочные функции (Arrow Functions)
 
@@ -27,7 +82,31 @@ const arrowFunction = (arg1, arg2) => arg1 + arg2;
 
 Особенности:
 - **Контекст выполнения (`this`)**: В стрелочных функциях значение `this` заимствуется из окружающего контекста, в котором они были определены. Они не создают собственного контекста `this`.
+```javascript
+const obj = {
+  name: "Объект obj",
+  show: function() {
+    // Стрелочная функция заимствует `this` из show
+    const inner = () => {
+      console.log(this.name);
+    };
+    inner();
+  }
+};
+
+obj.show(); // "Объект obj"
+
+```
 - **Аргументы (`arguments`)**: Стрелочные функции не имеют собственного объекта `arguments`. Однако, можно использовать `...args` для передачи переменного количества аргументов.
+```javascript
+function sum(...args) {
+    // args уже является настоящим массивом
+    return args.reduce((total, current) => total + current, 0);
+}
+
+console.log(sum(1, 2, 3, 4)); // Выведет 10
+
+```
 - **Не могут быть использованы как конструкторы**: Стрелочные функции не могут быть вызваны с оператором `new` и не могут быть использованы как конструкторы.
 
 #### Ключевые моменты

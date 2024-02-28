@@ -15,45 +15,50 @@
 ### Примеры
 
 1. **Глобальный контекст**:
+
 ```javascript
-console.log(this === window); // true в браузере
+console.log(this === window) // true в браузере
 ```
 
 2. **Метод объекта**:
+
 ```javascript
 const obj = {
   name: 'John',
-  greet: function() {
-    console.log('Hello, ' + this.name);
-  }
-};
-obj.greet(); // Выведет "Hello, John"
+  greet: function () {
+    console.log('Hello, ' + this.name)
+  },
+}
+obj.greet() // Выведет "Hello, John"
 ```
 
 3. **Конструктор**:
+
 ```javascript
 function Person(name) {
-  this.name = name;
+  this.name = name
 }
-const person = new Person('Alice');
-console.log(person.name); // Выведет "Alice"
+const person = new Person('Alice')
+console.log(person.name) // Выведет "Alice"
 ```
 
 4. **call() и apply()**:
+
 ```javascript
 function greet() {
-  console.log('Hello, ' + this.name);
+  console.log('Hello, ' + this.name)
 }
-const obj = { name: 'John' };
-greet.call(obj); // Выведет "Hello, John"
+const obj = { name: 'John' }
+greet.call(obj) // Выведет "Hello, John"
 ```
 
 5. **Анонимная функция**:
+
 ```javascript
 function outer() {
-  console.log(this); // Выведет глобальный объект или undefined (в зависимости от режима)
+  console.log(this) // Выведет глобальный объект или undefined (в зависимости от режима)
 }
-outer();
+outer()
 ```
 
 ### Почему это важно
@@ -73,16 +78,16 @@ outer();
 ```javascript
 const obj = {
   name: 'Alice',
-  greet: function() {
-    console.log('Hello, ' + this.name);
+  greet: function () {
+    console.log('Hello, ' + this.name)
     function inner() {
-      console.log('Inner hello, ' + this.name); // Здесь this будет ссылаться на глобальный объект или undefined
+      console.log('Inner hello, ' + this.name) // Здесь this будет ссылаться на глобальный объект или undefined
     }
-    inner();
-  }
-};
+    inner()
+  },
+}
 
-obj.greet(); 
+obj.greet()
 ```
 
 В этом примере функция `inner()` теряет привязку контекста `this`, поскольку она вызывается внутри метода `greet()`, но не является методом объекта `obj`. Это означает, что `this` в `inner()` будет ссылаться на глобальный объект (или `undefined` в строгом режиме), что может вызвать ошибки или нежелательное поведение.
@@ -94,17 +99,17 @@ obj.greet();
 ```javascript
 const obj = {
   name: 'Alice',
-  greet: function() {
-    const self = this;
-    console.log('Hello, ' + this.name);
+  greet: function () {
+    const self = this
+    console.log('Hello, ' + this.name)
     function inner() {
-      console.log('Inner hello, ' + self.name); // Используем сохраненную ссылку на this
+      console.log('Inner hello, ' + self.name) // Используем сохраненную ссылку на this
     }
-    inner();
-  }
-};
+    inner()
+  },
+}
 
-obj.greet(); 
+obj.greet()
 ```
 
 Теперь `self` ссылается на объект `obj`, и мы можем использовать его внутри вложенной функции `inner()`, чтобы обращаться к контексту `this` из внешнего метода `greet()`.
