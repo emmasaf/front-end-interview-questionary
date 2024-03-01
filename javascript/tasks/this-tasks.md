@@ -57,7 +57,7 @@ John can wave
 John can jump
 ```
 
-    </p>
+
 
 </details>
 
