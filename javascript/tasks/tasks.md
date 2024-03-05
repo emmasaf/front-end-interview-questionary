@@ -189,6 +189,14 @@ console.log(binarySearch(arr, number)) // Должно вывести индек
 4. **Вычисление факториала:**
    Напишите функцию на JavaScript, которая возвращает факториал заданного числа.
 
+```javascript
+function fact(num) {
+  if (num == 0) return 1
+  return num * fact(num - 1)
+}
+console.log(fact(5))
+```
+
 5. **Обход графа:**
    Объясните различные методы обхода графа, такие как обход в ширину (BFS) и в глубину (DFS).
 
