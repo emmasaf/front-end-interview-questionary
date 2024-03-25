@@ -12,7 +12,7 @@
 const person = Object.create(
   {
     calculateAge() {
-      console.log(`Age: ${new Date().getFullYear() - this.birthYear}`);
+      console.log(`Age: ${new Date().getFullYear() - this.birthYear}`)
     },
   },
   {
@@ -34,15 +34,15 @@ const person = Object.create(
     },
     age: {
       get() {
-        return new Date().getFullYear() - this.birthYear;
+        return new Date().getFullYear() - this.birthYear
       },
       set(value) {
-        document.body.style.backgroundColor = 'red';
-        console.log(value, 'set age');
+        document.body.style.backgroundColor = 'red'
+        console.log(value, 'set age')
       },
     },
-  }
-);
+  },
+)
 ```
 
 #### `Object.assign()`
@@ -52,10 +52,10 @@ const person = Object.create(
 Пример использования:
 
 ```javascript
-const obj1 = { a: 1, b: 2 };
-const obj2 = { b: 3, c: 4 };
+const obj1 = { a: 1, b: 2 }
+const obj2 = { b: 3, c: 4 }
 
-const mergedObj = Object.assign({}, obj1, obj2);
+const mergedObj = Object.assign({}, obj1, obj2)
 ```
 
 #### `Object.freeze()`
@@ -65,10 +65,10 @@ const mergedObj = Object.assign({}, obj1, obj2);
 Пример использования:
 
 ```javascript
-const obj = { prop: 42 };
-Object.freeze(obj);
+const obj = { prop: 42 }
+Object.freeze(obj)
 
-obj.prop = 33; // Это не будет иметь эффекта
+obj.prop = 33 // Это не будет иметь эффекта
 ```
 
 #### `Object.defineProperty()`
@@ -78,13 +78,121 @@ obj.prop = 33; // Это не будет иметь эффекта
 Пример использования:
 
 ```javascript
-const obj = {};
+const obj = {}
 
 Object.defineProperty(obj, 'name', {
   value: 'John',
   writable: false,
   enumerable: true,
-});
+})
+```
+
+#### `Object.defineProperties()`
+
+Метод Object.defineProperties() определяет новые или изменяет существующие свойства, непосредственно на объекте, возвращая этот объект.
+
+```javascript
+const object1 = {}
+
+Object.defineProperties(object1, {
+  property1: {
+    value: 42,
+    writable: true,
+  },
+  property2: {},
+})
+
+console.log(object1.property1)
+// Expected output: 42
+```
+
+#### `Object.entries()`
+
+Object.entries() метод возвращает массив собственных перечисляемых свойств указанного объекта в формате [key, value], в том же порядке, что и в цикле for...in (разница в том, что for-in перечисляет свойства из цепочки прототипов). Порядок элементов в массиве который возвращается Object.entries() не зависит от того как объект объявлен. Если существует необходимость в определённом порядке, то массив должен быть отсортирован до вызова метода, например Object.entries(obj).sort((a, b) => a[0] - b[0]);.
+
+```javascript
+const object1 = {
+  a: 'somestring',
+  b: 42,
+}
+
+//Object.entries(object1) - [["a","somestring"],["b",42]]
+
+for (const [key, value] of Object.entries(object1)) {
+  console.log(`${key}: ${value}`)
+}
+
+// Expected output:
+// "a: somestring"
+// "b: 42"
+```
+
+#### `Object.preventExtensions()`
+
+Метод Object.preventExtensions() предотвращает добавление новых свойств к объекту (то есть, предотвращает расширение этого объекта в будущем).
+
+```javascript
+const object1 = {}
+
+Object.preventExtensions(object1)
+
+try {
+  Object.defineProperty(object1, 'property1', {
+    value: 42,
+  })
+} catch (e) {
+  console.log(e)
+  // Expected output: TypeError: Cannot define property property1, object is not extensible
+}
+```
+
+#### `Object.keys()`
+Метод Object.keys() возвращает массив из собственных перечисляемых свойств переданного объекта, в том же порядке, в котором они бы обходились циклом for...in (разница между циклом и методом в том, что цикл перечисляет свойства и из цепочки прототипов)
+
+```javascript
+var arr = ["a", "b", "c"];
+console.log(Object.keys(arr)); // консоль: ['0', '1', '2']
+
+// Массивоподобный объект
+var obj = { 0: "a", 1: "b", 2: "c" };
+console.log(Object.keys(obj)); // консоль: ['0', '1', '2']
+
+// Свойство getFoo является не перечисляемым свойством
+var my_obj = Object.create(
+  {},
+  {
+    getFoo: {
+      value: function () {
+        return this.foo;
+      },
+    },
+  },
+);
+my_obj.foo = 1;
+
+console.log(Object.keys(my_obj)); // консоль: ['foo']
+```
+
+#### `Object.seal()`
+Метод Object.seal() запечатывает объект, предотвращая добавление новых свойств к объекту и делая все существующие свойства не настраиваемыми. Значения представленных свойств всё ещё могут изменяться, поскольку они остаются записываемыми.
+```javascript
+var obj = {
+  prop: function () {},
+  foo: "bar",
+};
+
+// Новые свойства могу быть добавлены, существующие свойства могут быть изменены или удалены.
+obj.foo = "baz";
+obj.lumpy = "woof";
+delete obj.prop;
+
+var o = Object.seal(obj);
+
+assert(o === obj);
+assert(Object.isSealed(obj) === true);
+
+// Изменение значений свойств на запечатанном объекте всё ещё работает.
+obj.foo = "quux";
 ```
 
 #### Почему методы объектов хранятся в куче?
@@ -107,14 +215,14 @@ const originalObject = {
   b: {
     c: 2,
   },
-};
+}
 
 // Поверхностное копирование
-const shallowCopy = Object.assign({}, originalObject);
+const shallowCopy = Object.assign({}, originalObject)
 
-originalObject.b.c = 3;
+originalObject.b.c = 3
 
-console.log(shallowCopy.b.c); // Выведет 3
+console.log(shallowCopy.b.c) // Выведет 3
 ```
 
 В этом примере `shallowCopy` содержит те же ключи и значения, что и `originalObject`, но если значения являются объектами, они остаются ссылками на оригинальные объекты.
@@ -132,20 +240,20 @@ JavaScript не предоставляет встроенного метода �
 Lodash - это библиотека JavaScript, которая предоставляет множество удобных функций для работы с данными, включая глубокое копирование объектов с помощью метода `cloneDeep()`.
 
 ```javascript
-const _ = require('lodash');
+const _ = require('lodash')
 
 const originalObject = {
   a: 1,
   b: {
     c: 2,
   },
-};
+}
 
-const deepCopiedObject = _.cloneDeep(originalObject);
+const deepCopiedObject = _.cloneDeep(originalObject)
 
-originalObject.b.c = 3;
+originalObject.b.c = 3
 
-console.log(deepCopiedObject.b.c); // Выведет 2
+console.log(deepCopiedObject.b.c) // Выведет 2
 ```
 
 Оба подхода позволяют создавать глубокие копии объектов, но использование метода `cloneDeep()` из Lodash может быть более удобным и читаемым в некоторых случаях, особенно если вам уже доступна библиотека Lodash в вашем проекте.
