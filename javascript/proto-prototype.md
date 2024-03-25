@@ -72,3 +72,48 @@ console.log(arr.shuffle())
   наследуемых методов и свойств.
 - Избегайте прямого использования `__proto__`, предпочитая методы `Object.getPrototypeOf()`
   и `Object.setPrototypeOf()` для работы с прототипами объектов.
+
+<hr>
+
+```javascript
+Quo.get_status = function() {
+    return this.status;
+}
+
+Quo.prototype.get_status = function() {
+return this.status;
+}
+
+```
+Разница между этими двумя фрагментами кода касается того, как создаются методы для объектов в JavaScript.
+
+1. **Quo.get_status**:
+   - Этот код добавляет метод `get_status` к самому объекту `Quo`. То есть, `get_status` будет являться свойством объекта `Quo`.
+   - Это означает, что каждый экземпляр объекта `Quo` будет иметь собственное копии метода `get_status`, что может привести к избыточному расходу памяти, если объекты `Quo` будут создаваться множество раз.
+   - Пример использования:
+     ```javascript
+     const myQuo = {};
+     myQuo.status = "active";
+     myQuo.get_status = function() {
+       return this.status;
+     };
+     console.log(myQuo.get_status()); // Вывод: "active"
+     ```
+
+2. **Quo.prototype.get_status**:
+   - Этот код добавляет метод `get_status` к прототипу объекта `Quo`. Теперь `get_status` будет доступен всем экземплярам объекта `Quo`, но сам метод будет находиться в его прототипе.
+   - Это экономит память, так как все экземпляры объекта `Quo` будут разделять одну и ту же копию метода `get_status`.
+   - Пример использования:
+     ```javascript
+     function Quo(status) {
+       this.status = status;
+     }
+     Quo.prototype.get_status = function() {
+       return this.status;
+     };
+     const myQuo = new Quo("active");
+     console.log(myQuo.get_status()); // Вывод: "active"
+     ```
+
+Таким образом, если вы хотите, чтобы метод был доступен для всех экземпляров объекта, наиболее эффективным способом добавления этого метода является добавление его в прототип объекта, используя `Quo.prototype.get_status`.
+
