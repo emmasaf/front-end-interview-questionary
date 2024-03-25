@@ -87,6 +87,32 @@ function randArr(arr) {
 console.log(randArr(arr))
 ```
 
+5. **Array Prototype**
+   Напишите функцию Array.prototype.filter()
+
+```javascript
+Array.prototype.myFilter = function (callback) {
+  let filteredArr = []
+  
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      let newItem = this[i]
+      filteredArr.push(newItem)
+    }
+  }
+
+  return filteredArr
+}
+
+const array = [1, 2, 3, 4, 5]
+
+let filteredArr = array.myFilter((el, index, arr) => {
+  return el % 2 === 0
+})
+
+console.log(filteredArr)
+```
+
 **Алгоритм Фишера-Йетс**
 
 ```javascript
@@ -195,8 +221,6 @@ function fact(num) {
   return num * fact(num - 1)
 }
 console.log(fact(5))
-
-
 ```
 
 5. **Обход графа:**
