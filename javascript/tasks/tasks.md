@@ -62,38 +62,26 @@ console.log(checkIsPalidrome(str))
 4. **Манипуляции с массивом:**
    Напишите функцию на JavaScript, которая перемешивает элементы массива случайным образом.
 
+**Алгоритм Фишера-Йетс**
+
 ```javascript
-let arr = ['a', 'b', 'c', 'd', 'e', 'f']
-function randArr(arr) {
-  let newArr = []
-  let set = new Set()
-
-  function setAdd() {
-    if (set.size > arr.length - 1) return
-    let num = Math.round(Math.random() * arr.length - 1)
-    if (!set.has(num)) {
-      set.add(num)
-    }
-    setAdd()
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+    // обмен элементами
   }
-  setAdd()
-  const randPlaces = [...set]
-  arr.forEach((el, i) => {
-    newArr[randPlaces[i]] = el
-  })
-
-  return newArr
+  return array
 }
-console.log(randArr(arr))
 ```
 
-5. **Array Prototype**
+5. **Array method filter**
    Напишите функцию Array.prototype.filter()
 
 ```javascript
 Array.prototype.myFilter = function (callback) {
   let filteredArr = []
-  
+
   for (let i = 0; i < this.length; i++) {
     if (callback(this[i], i, this)) {
       let newItem = this[i]
@@ -113,19 +101,25 @@ let filteredArr = array.myFilter((el, index, arr) => {
 console.log(filteredArr)
 ```
 
-**Алгоритм Фишера-Йетс**
+6. **Array method forEach**
+   Напишите функцию Array.prototype.forEach()
 
 ```javascript
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[array[i], array[j]] = [array[j], array[i]] // обмен элементами
+Array.prototype.myForEach = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    callback(this[i], i, this)
   }
-  return array
 }
+
+// Example usage:
+const array = [1, 2, 3, 4, 5]
+
+array.myForEach((element, index) => {
+  console.log(`Element at index ${index}: ${element}`)
+})
 ```
 
-5. **Нахождение максимального числа:**
+7. **Нахождение максимального числа:**
    Напишите функцию на JavaScript, которая находит максимальное число в массиве.
 
 ```javascript
