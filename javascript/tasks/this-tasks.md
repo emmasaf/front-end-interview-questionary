@@ -57,8 +57,6 @@ John can wave
 John can jump
 ```
 
-
-
 </details>
 
 ### второе задание
@@ -141,22 +139,20 @@ I am still Bob
 
 </details>
 
-
 ### давай перейдем к третьему заданию:
-
 
 ```javascript
 const team = {
   members: ['Jane', 'Bill'],
   teamName: 'Super Squad',
-  teamGreet: function() {
-    this.members.forEach((member) => {
-      console.log(`${member} is part of ${this.teamName}`);
-    });
-  }
-};
+  teamGreet: function () {
+    this.members.forEach(member => {
+      console.log(`${member} is part of ${this.teamName}`)
+    })
+  },
+}
 
-team.teamGreet();
+team.teamGreet()
 ```
 
 Что будет выводиться в консоль при вызове `team.teamGreet()`?
@@ -171,25 +167,29 @@ Bill is part of Super Squad
 ```
 
 Это происходит потому, что стрелочная функция, используемая в `forEach`, не создает собственный контекст `this`, а заимствует его из окружающего лексического контекста, то есть из метода `teamGreet`. В этом случае `this` ссылается на объект `team`, благодаря чему доступны свойства `members` и `teamName` этого объекта.
+
 </details>
 
 ### Давай рассмотрим более сложный пример с использованием замыканий:
 
 ```javascript
 function Person(name) {
-  this.name = name;
+  this.name = name
 }
 
-Person.prototype.delayedGreet = function() {
-  setTimeout(function() {
-    console.log('Hello, my name is ' + this.name);
-  }.bind(this), 1000);
-};
+Person.prototype.delayedGreet = function () {
+  setTimeout(
+    function () {
+      console.log('Hello, my name is ' + this.name)
+    }.bind(this),
+    1000,
+  )
+}
 
-const person = new Person('Alice');
-person.delayedGreet();
-
+const person = new Person('Alice')
+person.delayedGreet()
 ```
+
 <details>
 <summary>Answer</summary>
 В этом примере определен конструктор Person, который принимает имя и устанавливает его как свойство экземпляра. Метод delayedGreet добавляется в прототип Person и при его вызове запланирует асинхронное выполнение функции, которая выводит приветствие в консоль.
@@ -201,5 +201,33 @@ person.delayedGreet();
 ```csharp
 Hello, my name is Alice
 ```
+
 Этот пример демонстрирует, как можно использовать замыкания и this вместе для достижения желаемого поведения в асинхронных операциях, таких как задержки с setTimeout, особенно когда требуется сохранить контекст this из внешней функции.
+
+</details>
+
+```javascript
+var foo = {
+  baz: {
+    x: 1,
+    bar: function () {
+      return this.x
+    },
+  },
+}
+
+var go = foo.baz.bar
+
+console.log(go())
+console.log(foo.baz.bar())
+```
+
+<details>
+<summary>Answer</summary>
+
+```csharp
+undefined
+1
+```
+
 </details>
