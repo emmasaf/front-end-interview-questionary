@@ -168,7 +168,7 @@ let longestItem = fullArr
   })
   .toString()
 
-console.log(longestItem)
+console.log(longestItem) // D,E,F,G,H,I,J
 ```
 
 8. **Сортировка толыко нечетных цифр:**
@@ -187,7 +187,7 @@ newArr.map((e, i) => {
   }
   return newArr
 })
-console.log(newArr)
+console.log(newArr) // [2,3,4,5,7,9,8]
 ```
 
 ### Алгоритмы:
