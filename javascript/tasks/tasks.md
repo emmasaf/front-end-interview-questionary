@@ -143,6 +143,53 @@ console.log(findMax([-1, -2, -3, -4])) // Выведет -1
 console.log(findMax([])) // Выведет'array is empty'
 ```
 
+8. **Нахождение максимальной длинны строки:**
+   Задача: Найти максимальную длину подстроки, содержащей только повторяющиеся символы, и вывести эту подстроку.
+
+```javascript
+let example = 'ABCDDDEFGHIJKKKLMNOPQRSTUV'
+let strArr = []
+let fullArr = []
+for (let i = 0; i < example.length; i++) {
+  if (example[i] !== example[i + 1]) {
+    strArr.push(example[i])
+  } else {
+    if (strArr.length > 0) {
+      fullArr.push(strArr)
+    }
+    strArr = []
+  }
+}
+let longestLength = Math.max(...fullArr.map(el => el.length))
+
+let longestItem = fullArr
+  .find(el => {
+    return el.length === longestLength
+  })
+  .toString()
+
+console.log(longestItem)
+```
+
+8. **Сортировка толыко нечетных цифр:**
+   Задача: Отсортировать только нечетные числа в массиве, сохраняя порядок следования остальных элементов.
+
+```javascript
+let arr = [2, 5, 4, 7, 3, 9, 8]
+let sortedOddNums = arr.filter(e => e % 2 !== 0).sort((a, b) => a - b)
+
+let newArr = [...arr]
+let count = 0
+newArr.map((e, i) => {
+  if (e % 2 !== 0) {
+    newArr[i] = sortedOddNums[count]
+    ++count
+  }
+  return newArr
+})
+console.log(newArr)
+```
+
 ### Алгоритмы:
 
 1. **Сортировка пузырьком:**
